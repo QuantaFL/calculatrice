@@ -248,5 +248,15 @@ namespace Calculatrice
                 txtBox.Text = "0";
             }
         }
+
+        private void btnDiviser_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

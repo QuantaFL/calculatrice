@@ -65,6 +65,7 @@
             this.btnDiviser.TabIndex = 28;
             this.btnDiviser.Text = "÷";
             this.btnDiviser.UseVisualStyleBackColor = true;
+            this.btnDiviser.Click += new System.EventHandler(this.btnDiviser_Click);
             // 
             // btnFois
             // 
@@ -194,6 +195,7 @@
             this.txtBox.Name = "txtBox";
             this.txtBox.Size = new System.Drawing.Size(374, 68);
             this.txtBox.TabIndex = 15;
+            this.txtBox.TextChanged += new System.EventHandler(this.txtBox_TextChanged);
             // 
             // button1
             // 

@@ -8,3 +8,4 @@ C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\obj\Debug\Calculatrice.cs
 C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\obj\Debug\Calculatrice.exe
 C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\obj\Debug\Calculatrice.pdb
 C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\obj\Debug\Calculatrice.Form2.resources
+C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\obj\Debug\Calculatrice.Calculator.resources
