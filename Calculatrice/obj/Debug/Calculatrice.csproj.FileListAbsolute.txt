@@ -2,10 +2,9 @@ C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\bin\Debug\Calculatrice.ex
 C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\bin\Debug\Calculatrice.exe
 C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\bin\Debug\Calculatrice.pdb
 C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\obj\Debug\Calculatrice.csproj.AssemblyReference.cache
-C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\obj\Debug\Calculatrice.Form1.resources
-C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\obj\Debug\Calculatrice.Form2.resources
 C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\obj\Debug\Calculatrice.Properties.Resources.resources
 C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\obj\Debug\Calculatrice.csproj.GenerateResource.cache
 C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\obj\Debug\Calculatrice.csproj.CoreCompileInputs.cache
 C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\obj\Debug\Calculatrice.exe
 C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\obj\Debug\Calculatrice.pdb
+C:\Users\cheikh\source\repos\Calculatrice\Calculatrice\obj\Debug\Calculatrice.Form2.resources
