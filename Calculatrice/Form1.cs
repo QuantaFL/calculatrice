@@ -8,164 +8,84 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Button = System.Windows.Forms.Button;
 
 namespace Calculatrice
 {
-    public partial class Calculator : Form
+    public partial class frmBasCalculator : Form
     {
-        public Calculator()
+        static string temp = string.Empty;
+        static List<string> memory = new List<string>();
+        public frmBasCalculator(List<String> items)
         {
             InitializeComponent();
             txtBox.Text = string.Empty;
+            memory = new List<string>();
+            foreach (String item in items) 
+            { 
+                memory.Add(item);
+            }
         }
-
-
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void BtnClick(object sender, EventArgs e)
         {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnZero_Click(object sender, EventArgs e)
-        {
-            BoxChanger('0');
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button13_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnResult_Click(object sender, EventArgs e)
-        {
-            var result = new System.Data.DataTable().Compute(txtBox.Text.Trim(), null);
-            txtBox.Text = result.ToString();
-        }
-
-        private void btnZero_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnOne_Click(object sender, EventArgs e)
-        {
-            BoxChanger('1');
-        }
-
-        private void btnTwo_Click(object sender, EventArgs e)
-        {
-            BoxChanger('2');
-        }
-
-        private void btnThree_Click(object sender, EventArgs e)
-        {
-            BoxChanger('3');
-        }
-        /// <summary>
-        /// Ceci permet d'ajouter un caractere donnee au texte field
-        /// </summary>
-        /// <param name="character"></param>
-        void BoxChanger(char character)
-        {
-            txtBox.Text = txtBox.Text.Trim()+ character;
-        }
-
-        private void btnSeven_Click(object sender, EventArgs e)
-        {
-            BoxChanger('7');
-        }
-
-        private void btnFive_Click(object sender, EventArgs e)
-        {
-            BoxChanger('5');
-        }
-
-        private void btnFour_Click(object sender, EventArgs e)
-        {
-            BoxChanger('4');
-        }
-
-        private void btnSix_Click(object sender, EventArgs e)
-        {
-            BoxChanger('6');
-        }
-
-        private void btnEight_Click(object sender, EventArgs e)
-        {
-            BoxChanger('8');
-        }
-
-        private void btnNine_Click(object sender, EventArgs e)
-        {
-            BoxChanger('9');
-        }
-
-        private void btnDivide_Click(object sender, EventArgs e)
-        {
-            if (!(txtBox.Text.Equals(string.Empty) || IsOperator(txtBox.Text[txtBox.Text.Length - 1])))
-            {
-                BoxChanger('/');
-            }
-        }
-
-        private void btnMinus_Click(object sender, EventArgs e)
-        {
-            if (!(txtBox.Text.Equals(string.Empty) || IsOperator(txtBox.Text[txtBox.Text.Length - 1])))
-            {
-                BoxChanger('-');
-            }
-        }
-
-        private void btnTimes_Click(object sender, EventArgs e)
-        {
-            if (!(txtBox.Text.Equals(string.Empty) || IsOperator(txtBox.Text[txtBox.Text.Length - 1])))
-            {
-                BoxChanger('*');
-            }
-        }
-
-        private void btnPlus_Click(object sender, EventArgs e)
-        {
-            if (!(txtBox.Text.Equals(string.Empty) || IsOperator(txtBox.Text[txtBox.Text.Length - 1])))
-            {
-                BoxChanger('+');
-            }
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            if (!txtBox.Text.Equals("0"))
+            Button btn = sender as Button;
+            if (btn.Text.Equals("Del"))
             {
                 txtBox.Text = txtBox.Text.Trim().Length > 0 ? txtBox.Text.Substring(0, txtBox.Text.Length - 1) : txtBox.Text;
-                if (txtBox.Text.Equals(""))
+            }
+            else
+            {
+               BoxChanger(btn.Text.ToString()[0]);
+            }
+            
+        }
+
+        private void BtnResult_Click(object sender, EventArgs e)
+        {
+            string calculate = string.Empty;
+            if (!string.IsNullOrEmpty(txtOperator.Text) && !string.IsNullOrEmpty(txtBox.Text))
+            {
+                calculate = txtOperator.Text + txtBox.Text;
+                try
                 {
-                    txtBox.Text = "0";
+                    var result = new DataTable().Compute(calculate.Trim(), null);
+                    memory.Add(calculate+" = "+result.ToString());
+                    txtBox.Text = result.ToString();
+                    txtOperator.Text = string.Empty;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error in calculation: " + ex.Message);
                 }
             }
         }
-
-        private void btnClear_Click(object sender, EventArgs e)
+        private void BtnBasSc(object sender, EventArgs e)
         {
-            txtBox.Text = string.Empty;
+            new frmAdvCalculator(memory).Show();
+            this.Hide();
+        }
+
+        /// <summary>
+        /// Gere l'ajout de caracteres dans la zone de texte.
+        /// - Si le caractere est une parenthese ouvrante ou fermante, la fonction VerifParenth est utilisee pour verifier et ajouter la parenthese.
+        /// - Sinon, la fonction SignsAndNumbers est utilisee pour ajouter un operateur ou un chiffre.
+        /// </summary>
+        /// <param name="character">Le caractere a ajouter (parenthese, operateur ou chiffre).</param>
+        void BoxChanger(char character)
+        {
+            if (character == '(' || character == ')')
+            {
+                VerifParenth(character);
+            }
+            else
+            {
+                SignsAndNumbers(character);
+            }
         }
         /// <summary>
         /// ceci verifie si le caractere est un operateur ou pas
@@ -174,7 +94,73 @@ namespace Calculatrice
         /// <returns>retourne vrai si la valeur est un operateur sinon elle retourne faux</returns>
         private bool IsOperator(char c)
         {
-            return c == '+' || c == '-'|| c == '*' || c == '/';
+            return c == '+' || c == '-'|| c == '*' || c == '/' || c == '.'||c == '=';
+        }
+
+        /// <summary>
+        /// Verifie et gere l'ajout des parentheses dans la zone de texte.
+        /// - Si c'est une parenthese ouvrante '(', elle est ajoute si le champ est vide ou si le dernier caractere est un operateur ou une parenthese ouvrante.
+        /// - Si c'est une parenthese fermante ')', elle est ajoute seulement si une parenthese ouvrante correspond et si le dernier caractere n'est pas un operateur ou une parenthese ouvrante.
+        /// </summary>
+        /// <param name="character">Le caractere parenthese (ouvrante ou fermante) a ajouter.</param>
+        private void VerifParenth(char character)
+        {
+            if (character == '(')
+            {
+                if (txtBox.Text.Length == 0 || IsOperator(txtBox.Text.Last()) || txtBox.Text.Last() == '(')
+                {
+                    txtBox.Text += character;
+                }
+            }
+            else if (character == ')')
+            {
+                int openParenth = txtBox.Text.Count(c => c == '(');
+                int closeParenth = txtBox.Text.Count(c => c == ')');
+
+                if (openParenth > closeParenth)
+                {
+                    if (txtBox.Text.Length > 0 && !IsOperator(txtBox.Text.Last()) && txtBox.Text.Last() != '(')
+                    {
+                        txtBox.Text += character;
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// Gere l'ajout des operateurs et des chiffres dans la zone de texte.
+        /// Si un operateur est saisi, il est ajoute a txtBox ou txtOperator selon l'equilibre des parentheses.
+        /// Les chiffres sont simplement ajoutes a txtBox.
+        /// </summary>
+        /// <param name="character">Le caractere a ajouter soit un operateur ou chiffre</param>
+        private void SignsAndNumbers(char character)
+        {
+            if (IsOperator(character))
+            {
+                if (!string.IsNullOrEmpty(txtBox.Text) && !IsOperator(txtBox.Text.Last()) && txtBox.Text.Last() != '(')
+                {
+                    int openParenth = txtBox.Text.Count(c => c == '(');
+                    int closeParenth = txtBox.Text.Count(c => c == ')');
+
+                    if (openParenth > closeParenth)
+                    {
+                        txtBox.Text += character;
+                    }
+                    else
+                    {
+                        txtOperator.Text += txtBox.Text + character;
+                        txtBox.Text = string.Empty;
+                    }
+                }
+            }
+            else
+            {
+                txtBox.Text += character;
+            }
+        }
+
+        private void frmBas(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
